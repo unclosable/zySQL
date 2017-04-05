@@ -1,11 +1,25 @@
-import common
+import zySQL as common
 
 if __name__ == "__main__":
-    select = common.select()
+    common.insert('tabletest1', f1='f1', f2='f2').do({
+        'f1': 'ttttt',
+        'f2': "rrrrr"
+    })
+    common.update('tabletest1').set(f1='up date test hh').where(f1='1').execute()
 
-    re = select.query('tabletest1',
-                      f1='22"""w\'ddd\'w',
-                      id=1
-                      )
+    re = common.select('id', 'f1', 'f2') \
+        .from_('tabletest1') \
+        .where(f2='rrrrr') \
+        .query()
+    print(re)
+    common.delete('tabletest1').execute()
+    re = common.select('id', 'f1', 'f2') \
+        .from_('tabletest1') \
+        .query()
 
     print(re)
+
+    # common.insert('tabletest1', f1="f1test", f2="f2test").do({
+    #     'f1test': '1',
+    #     'f2test': '2'
+    # })

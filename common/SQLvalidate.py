@@ -8,10 +8,16 @@ def hasQueryColunm(colunms):
 
 
 def hasQueryCondition(conditions):
-    if conditions is None:
+    if conditions is None or conditions == {}:
         return False
     if not isinstance(conditions, dict):
         raise Exception("非法的查询条件")
+    return True
+
+
+def validateUpdateCondition(updates, ex):
+    if updates is None or updates == {}:
+        raise Exception(ex)
     return True
 
 

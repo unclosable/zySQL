@@ -63,6 +63,37 @@ class connect_pool(object):
 
         return wrapperFunc
 
+    def execute(self, func):
+        def wrapperFunc(*prop, **map):
+            conn = self.__pool.get_connection()
+            cur = conn.cursor()
+            queryEnrty = func(*prop, **map)
+            if type(queryEnrty) is str:
+                cur.execute(queryEnrty)
+            else:
+                cur.execute(*queryEnrty)
+            # print(cur.execute())
+            # print(re)
+            conn.commit()
+            cur.close()
+            conn.close()
+
+        return wrapperFunc
+
+    def execute_many(self, func):
+        def wrapperFunc(*prop, **map):
+            conn = self.__pool.get_connection()
+            cur = conn.cursor()
+            queryEnrty = func(*prop, **map)
+            cur.executemany(*queryEnrty)
+            # print(cur.execute())
+            # print(re)
+            conn.commit()
+            cur.close()
+            conn.close()
+
+        return wrapperFunc
+
         # conf = configparser.ConfigParser()
         # path = os.path.split(os.path.realpath(__file__))[0] + '/database.conf'
         # conf.read(path)

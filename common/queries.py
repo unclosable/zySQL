@@ -3,6 +3,7 @@ from .pool import connect_pool
 from .condition_handler import handler
 from .sqls import *
 import configparser, os
+import sys
 
 
 def initConfig():
@@ -27,7 +28,8 @@ def __getUperPath(path=None):
     if path:
         return os.path.dirname(path)
     else:
-        return os.path.dirname(os.path.abspath(__file__))
+        return os.path.abspath(sys.path[0])
+
 
 
 conn = initConfig()
@@ -181,10 +183,13 @@ class insert(baseQuery):
         return SQL
 
     def do(self, data):
-        if isinstance(data, list):
-            return self.__list__(data)
-        else:
-            return self.__singel__(data)
+        try:
+            if isinstance(data, list):
+                return self.__list__(data)
+            else:
+                return self.__singel__(data)
+        except Exception as e:
+            print(e)
 
     @conn.execute
     def __singel__(self, data):
@@ -204,6 +209,7 @@ class insert(baseQuery):
                     thisCondition.append(data[self._colunmMap[colunm]])
             conditions.append(tuple(thisCondition))
         return (self.__insertSQL__(), conditions)
+
 
 class delete(baseQuery):
     def __init__(self, table):

@@ -72,8 +72,6 @@ class connect_pool(object):
                 cur.execute(queryEnrty)
             else:
                 cur.execute(*queryEnrty)
-            # print(cur.execute())
-            # print(re)
             conn.commit()
             cur.close()
             conn.close()
@@ -86,31 +84,8 @@ class connect_pool(object):
             cur = conn.cursor()
             queryEnrty = func(*prop, **map)
             cur.executemany(*queryEnrty)
-            # print(cur.execute())
-            # print(re)
             conn.commit()
             cur.close()
             conn.close()
 
         return wrapperFunc
-
-        # conf = configparser.ConfigParser()
-        # path = os.path.split(os.path.realpath(__file__))[0] + '/database.conf'
-        # conf.read(path)
-        # prop = {}
-        # for key, value in conf.items('DB'):
-        #     prop[key] = value
-        # conn = connect_pool(**prop)
-        #
-        #
-        # @conn.query
-        # def test(wwww, test=1):
-        #     print(wwww)
-        #     print(test)
-        #     return ("select count(%s) from tablebase", (1,))
-        # return "select count(1) from tablebase"
-
-# if __name__ == "__main__":
-#     list = ['1', '2', '3']
-#     for i in list:
-#         print(i)

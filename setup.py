@@ -5,4 +5,5 @@ setup(name='zySQL',
       description='ZhengWei\'s MySql connect lib',
       author='Zheng Wei',
       author_email='zhengweiSE@gmail.com',
-      py_modules=['zySQL'])
+      install_requires=['mysql-connector=2.1.4'],
+      packages=['common'])

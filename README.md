@@ -1,5 +1,8 @@
 # zySQL
-一个基于mysql-connector的简单封装
+
+一个基于mysql-connector的简单封装（也许需要自己安装）
+
+## example 实例
 
     import zySQL
 
@@ -21,7 +24,7 @@
     common.delete('testtable').where(id=1).execute()
 
 ## usage 使用
-在main方法同级创建database.conf:
+在main方法同级或者上级目录中创建database.conf:
 
     [DB]
     host = 127.0.0.1
@@ -29,7 +32,7 @@
     database = test_base
     user = root
     password = root
-
+若一直找不到会一直找到‘／’为止并抛出异常
 在import的时候会自动读取‘DB’下的配置信息
 
 ## other 另

@@ -20,7 +20,6 @@ def initConfig():
     for key, value in conf.items('DB'):
         prop[key] = value
     conn = connect_pool(**prop)
-    # print(confPath)
     return conn
 
 
@@ -29,7 +28,6 @@ def __getUperPath(path=None):
         return os.path.dirname(path)
     else:
         return os.path.abspath(sys.path[0])
-
 
 
 conn = initConfig()
@@ -133,7 +131,6 @@ class update(baseQuery):
                 transRe = handler(key, value)
                 SQL += transRe[0]
                 conditions.extend(transRe[1])
-        print(SQL, tuple(conditions))
         return (SQL, tuple(conditions))
 
 
@@ -183,13 +180,10 @@ class insert(baseQuery):
         return SQL
 
     def do(self, data):
-        try:
-            if isinstance(data, list):
-                return self.__list__(data)
-            else:
-                return self.__singel__(data)
-        except Exception as e:
-            print(e)
+        if isinstance(data, list):
+            return self.__list__(data)
+        else:
+            return self.__singel__(data)
 
     @conn.execute
     def __singel__(self, data):
@@ -239,5 +233,4 @@ class delete(baseQuery):
                 transRe = handler(key, value)
                 SQL += transRe[0]
                 conditions.extend(transRe[1])
-        print(SQL, tuple(conditions))
         return (SQL, tuple(conditions))

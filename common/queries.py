@@ -43,6 +43,11 @@ class baseQuery(object):
     _groupby = ''
 
 
+@conn.query  # 简单的纯SQL查询
+def basicQuery(SQL):
+    return (SQL, ())
+
+
 class select(baseQuery):
     def __init__(self, *colunms):
         self._colunms.extend(colunms)

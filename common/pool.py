@@ -37,15 +37,6 @@ class connect_pool(object):
     def __get_conn(self):
         return self.__pool.get_connection()
 
-    def test(self):
-        conn = self.__pool.get_connection()
-        cur = conn.cursor()
-        cur.execute('SELECT COUNT(1) FROM tablebase')
-        re = cur.fetchall()
-        print(re)
-        cur.close()
-        conn.close()
-
     def query(self, func):
         def wrapperFunc(*prop, **map):
             conn = self.__pool.get_connection()
